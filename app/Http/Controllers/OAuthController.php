@@ -20,6 +20,7 @@ class OAuthController extends Controller
 
     public function redirect()
     {
+        return 'test';
         return redirect($this->service->getProvider()->getAuthorizationUrl());
     }
 
@@ -30,7 +31,6 @@ class OAuthController extends Controller
 
         // Get the get the store details
          
-       
        
 
 
