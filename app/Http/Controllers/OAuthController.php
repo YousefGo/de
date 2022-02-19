@@ -20,7 +20,7 @@ class OAuthController extends Controller
 
     public function redirect()
     {
-        return 'test';
+       
         return redirect($this->service->getProvider()->getAuthorizationUrl());
     }
 
