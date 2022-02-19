@@ -51,10 +51,10 @@ class DashboardController extends Controller
             }
 
             // let's get the store details to show it
-            $store = $this->salla->getStoreDetail();
+        return     $store = $this->salla->getStoreDetail();
 
             // let's get the product of store via salla service
-        return     $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
+             $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
 
             /**
              * Or you can use Http client of laravel to get the products
