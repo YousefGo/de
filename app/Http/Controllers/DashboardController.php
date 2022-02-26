@@ -56,7 +56,7 @@ class DashboardController extends Controller
             // let's get the product of store via salla service
                 $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
                  $orders = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page = 1 ')['data'];
-                 $number =  $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page');
+                 $number =  $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page')['pagination']['totalPages'];
 
                  $orders2 = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page = 2 ')['data'];
                  $list = array();
