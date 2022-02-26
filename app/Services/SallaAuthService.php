@@ -50,6 +50,13 @@ class SallaAuthService
         return $this;
     }
 
+    public function deleteToken (User $user)
+    {
+        $user->token = null;
+        $user->save();
+
+    }
+
     /**
      * @return Salla
      */
