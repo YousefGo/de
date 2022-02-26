@@ -62,17 +62,33 @@ class DashboardController extends Controller
                             $number = $number/10;
                         }
                         else{
-                            $number = (int) ($number/10)+1;
+                            $tenLoop = $number/10;
+                            $part = $number - $tenLoop;
+
                         }
                      
 
-                //  $orders2 = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page = 2 ')['data'];
-                //  $list = array();
-                //  for ($i=1 ; $i<=10 ; $i++){
-                //  array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
-                //  }
+                 $orders2 = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page = 2 ')['data'];
+                 $list = array();
+                 for ($i=1 ; $i<=$number ; $i++){
+                 array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
+                 }
+                 for ($i=11 ; $i<=$number*2 ; $i++){
+                    array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
+                    }
+                    for ($i=21 ; $i<=$number*3 ; $i++){
+                        array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
+                        }  
+                    
 
-                return response()->json(['orders'=>$number]
+                            for ($i=31 ; $i<=$part ; $i++){
+                                array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
+                                } 
+        
+
+
+                            
+                return response()->json(['orders'=>$list]
                 );
              
             //    $data = $this->salla->request('GET', 'https://accounts.salla.sa/oauth2/user/info')['data'];
