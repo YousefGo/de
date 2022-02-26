@@ -56,14 +56,14 @@ class DashboardController extends Controller
             // let's get the product of store via salla service
                 $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
                 $orders = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page');
-                $data = array();
-                for($i=1 ; $i<35 ;$i++){
-                  echo $this->salla->request('GET', "https://api.salla.dev/admin/v2/orders?page=$i");
-                }
+             
             //    $data = $this->salla->request('GET', 'https://accounts.salla.sa/oauth2/user/info')['data'];
             //   $categroes = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/categoriess')['data'];
             // return   $customers = $this->salla->request('GET', 'https://api.salla.dev/admin/v2 /customers');
-          
+            return response()->json([
+                'order' => $orders
+              
+            ]);
                  
 
 
