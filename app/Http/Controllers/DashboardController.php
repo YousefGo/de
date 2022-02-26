@@ -60,10 +60,7 @@ class DashboardController extends Controller
                 $test = json_encode($orders);
                  $order3 =   $orders+  $orders2;
 
-                return response()->json([
-                    '1'=>$test ,
-                    
-                ]
+                return response()->json($test
                 );
              
             //    $data = $this->salla->request('GET', 'https://accounts.salla.sa/oauth2/user/info')['data'];
