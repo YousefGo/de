@@ -62,7 +62,7 @@ class DashboardController extends Controller
                             $number = $number/10;
                         }
                         else{
-                            $number = ($number/10)+1;
+                            $number = (int) ($number/10)+1;
                         }
                      
 
