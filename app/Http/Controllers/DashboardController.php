@@ -59,9 +59,9 @@ class DashboardController extends Controller
             // let's get the product of store via salla service
                 // $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
                  // 
-  
+                $test =serialize($store);
                  $myfile = fopen(URL::asset("text.txt"), "r") or die("Unable to open file!");
-                 fwrite($myfile, serialize($store));
+                 fwrite($myfile,$test );
                  echo fread($myfile,filesize("text.txt"));
 
                  fclose($myfile);
@@ -83,11 +83,6 @@ class DashboardController extends Controller
                     $countr = $countr+1;
                  }
               
-                return response()->json([
-                    'list1' => $data,
-                  
-                  
-                ]);
 
                 //  for ($i=11 ; $i<=20 ; $i++){
                 //     array_push($list2, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']['id']);
