@@ -4,7 +4,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OAuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 
 /*
@@ -27,9 +26,7 @@ Route::get('/dashboard', DashboardController::class)->middleware(['auth'])->name
 Auth::routes();
 
 Route::get('test',function(){
-    $myfile = fopen(URL::asset("text.txt"), "r") or die("Unable to open file!");
-    echo fread($myfile,filesize("text.txt"));
-    fclose($myfile);
+   
 });
 // Salla Auth OAuth 
 Route::group(['middleware' => 'auth'], function () {

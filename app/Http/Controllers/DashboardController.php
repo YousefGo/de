@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\SallaAuthService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 use function PHPUnit\Framework\isNull;
@@ -58,7 +59,12 @@ class DashboardController extends Controller
             // let's get the product of store via salla service
                 // $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
                  // 
-             
+                 $myfile = fopen(URL::asset("text.txt"), "r") or die("Unable to open file!");
+                 fwrite($myfile, $store."");
+                 echo fread($myfile,filesize("text.txt"));
+
+                 fclose($myfile);
+              
                 
                
                 $data = array();
