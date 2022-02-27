@@ -77,11 +77,11 @@ class DashboardController extends Controller
                     $countr = $countr+1;
                  }
               
-                return response()->json([
-                    'list1' => $data,
+                // return response()->json([
+                //     'list1' => $data,
                   
                   
-                ]);
+                // ]);
 
                 //  for ($i=11 ; $i<=20 ; $i++){
                 //     array_push($list2, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']['id']);
