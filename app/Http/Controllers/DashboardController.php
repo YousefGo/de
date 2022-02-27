@@ -59,31 +59,26 @@ class DashboardController extends Controller
                 // $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
                  $orders = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page');
                  // 
-                //   $number =  $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page')['pagination']['totalPages'];
-                        // if($number%10==0){
-                        //     $number = $number/10;
-                        // }
-                        // else{
-                        //     $tenLoop = $number/10;
-                        //     $part = $number - $tenLoop;
-
-                        // }
-                     
-
-                 $list = array();
-                 $list2 = array();
+             
+                
                
-                //  for ($i=1 ; $i<=10 ; $i++){
-                //  array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page=')['pagination']);
-                //  }
-                if(!is_null($orders['pagination']['links']['next'])){
-                    return response()->json([
-                        'list1' => 'test',
-                      
-                      
-                    ]);
-                }
-
+                $data = array();
+                $flag = true; 
+                $countr = 1 ;
+                 while($flag){
+                    $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page='.$countr);
+                    array_push($data,$order['data']);
+                    if(is_null($order['pagination']['links']['next'])){
+                     $flag = false;
+                    }  
+                    $countr = $countr+1;
+                 }
+              
+                return response()->json([
+                    'list1' => $data,
+                  
+                  
+                ]);
 
                 //  for ($i=11 ; $i<=20 ; $i++){
                 //     array_push($list2, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']['id']);
