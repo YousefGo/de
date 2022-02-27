@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\OauthToken;
 
 
 class LoginController extends Controller
@@ -46,7 +46,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->guard()->logout();
-
+        OauthToken::where('user_id',Auth::user()->id)->delete();
 
         $request->session()->invalidate();
 
