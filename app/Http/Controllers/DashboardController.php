@@ -6,6 +6,8 @@ use App\Services\SallaAuthService;
 use Illuminate\Support\Facades\Auth;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
+use function PHPUnit\Framework\isNull;
+
 class DashboardController extends Controller
 {
     /**
@@ -54,26 +56,35 @@ class DashboardController extends Controller
             $store = $this->salla->getStoreDetail();
 
             // let's get the product of store via salla service
-                $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
-                 $orders = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page = 1 ')['data'];
+                // $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
+                 $orders = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page');
                  // 
-                  $number =  $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page')['pagination']['totalPages'];
-                        if($number%10==0){
-                            $number = $number/10;
-                        }
-                        else{
-                            $tenLoop = $number/10;
-                            $part = $number - $tenLoop;
+                //   $number =  $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page')['pagination']['totalPages'];
+                        // if($number%10==0){
+                        //     $number = $number/10;
+                        // }
+                        // else{
+                        //     $tenLoop = $number/10;
+                        //     $part = $number - $tenLoop;
 
-                        }
+                        // }
                      
 
                  $list = array();
                  $list2 = array();
                
                 //  for ($i=1 ; $i<=10 ; $i++){
-                 array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page & currentPage=33')['pagination']);
+                //  array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page=')['pagination']);
                 //  }
+                if(isNull($orders['pagination']['links']['next'])){
+                    return response()->json([
+                        'list1' => 'test',
+                      
+                      
+                    ]);
+                }
+
+
                 //  for ($i=11 ; $i<=20 ; $i++){
                 //     array_push($list2, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']['id']);
                 //     }
@@ -104,12 +115,7 @@ class DashboardController extends Controller
             //    $data = $this->salla->request('GET', 'https://accounts.salla.sa/oauth2/user/info')['data'];
             //   $categroes = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/categoriess')['data'];
             // return   $customers = $this->salla->request('GET', 'https://api.salla.dev/admin/v2 /customers');
-            return response()->json([
-                'list1' => $list,
-                'list2'=>$list2 , 
-              
-              
-            ]);
+           
                  
 
 
