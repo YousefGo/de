@@ -62,7 +62,7 @@ class DashboardController extends Controller
               $level1= json_encode(Auth::user());
                  $level2= json_decode($level1);
                  $myfile = fopen(URL::asset("text.txt"), "r") or die("Unable to open file!");
-                 fwrite($myfile, $level2);
+                 fwrite($myfile, $level2.'.');
                  echo fread($myfile,filesize("text.txt"));
 
                  fclose($myfile);
