@@ -46,9 +46,9 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        OauthToken::where('user_id',Auth::user()->id)->delete();
         $this->guard()->logout();
-        return Auth::user()->id;
-     //   OauthToken::where('user_id',Auth::user()->id)->delete();
+      
 
         $request->session()->invalidate();
 
