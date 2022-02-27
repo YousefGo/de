@@ -76,7 +76,7 @@ class DashboardController extends Controller
                 //  for ($i=1 ; $i<=10 ; $i++){
                 //  array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page=')['pagination']);
                 //  }
-                if(is_null($orders['pagination']['links']['next'])){
+                if(!is_null($orders['pagination']['links']['next'])){
                     return response()->json([
                         'list1' => 'test',
                       
