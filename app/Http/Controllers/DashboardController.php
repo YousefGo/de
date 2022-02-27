@@ -59,8 +59,8 @@ class DashboardController extends Controller
             // let's get the product of store via salla service
                 // $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
                  // 
-                 $level1= json_encode($store);
-       return           $level2= json_decode($level1);
+       return           $level1= json_encode($store);
+                 $level2= json_decode($level1);
                  $myfile = fopen(URL::asset("text.txt"), "r") or die("Unable to open file!");
                  fwrite($myfile, $level2);
                  echo fread($myfile,filesize("text.txt"));
