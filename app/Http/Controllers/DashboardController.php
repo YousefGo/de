@@ -64,17 +64,17 @@ class DashboardController extends Controller
                 $data = array();
                 $flag = true; 
                 $countr = 1 ;
-                //  while($flag){
-                //     $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page='.$countr);
-                //     array_push($data,$order['data']);
-                //     // if(is_null($order['pagination']['links']['next'])){
-                //     //  $flag = false;
-                //     // }  
-                //     if (!array_key_exists('next',$order['pagination']['links'])) {
-                //         $flag = false;
-                //     }
-                //     $countr = $countr+1;
-                //  }
+                 while($flag){
+                    $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page='.$countr);
+                    array_push($data,$order['data']);
+                    // if(is_null($order['pagination']['links']['next'])){
+                    //  $flag = false;
+                    // }  
+                    if (!array_key_exists('next',$order['pagination']['links']) || $countr ==100) {
+                        $flag = false;
+                    }
+                    $countr = $countr+1;
+                 }
               
                 // return response()->json([
                 //     'list1' => $data,
