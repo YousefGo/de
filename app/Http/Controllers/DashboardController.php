@@ -70,7 +70,7 @@ class DashboardController extends Controller
 
                  $orders2 = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page = 2 ')['data'];
                  $list = array();
-                 for ($i=1 ; $i<=20 ; $i++){
+                 for ($i=1 ; $i<=34 ; $i++){
                  array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
                  }
                 //  for ($i=11 ; $i<=20 ; $i++){
@@ -88,8 +88,8 @@ class DashboardController extends Controller
 
 
                             
-                return response()->json(['orders'=>$list]
-                );
+                // return response()->json(['orders'=>$list]
+                // );
              
             //    $data = $this->salla->request('GET', 'https://accounts.salla.sa/oauth2/user/info')['data'];
             //   $categroes = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/categoriess')['data'];
