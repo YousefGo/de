@@ -72,7 +72,7 @@ class DashboardController extends Controller
                  $list2 = array();
                
                  for ($i=1 ; $i<=10 ; $i++){
-                 array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']['id']);
+                 array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['pagination']);
                  }
                  for ($i=11 ; $i<=20 ; $i++){
                     array_push($list2, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']['id']);
