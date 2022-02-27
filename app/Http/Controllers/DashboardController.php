@@ -70,12 +70,20 @@ class DashboardController extends Controller
 
                  $list = array();
                  $list2 = array();
+                 $list3 = array();
+                 $list4 = array();
                  for ($i=1 ; $i<=10 ; $i++){
                  array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
                  }
                  for ($i=11 ; $i<=20 ; $i++){
                     array_push($list2, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
                     }
+                    for ($i=21 ; $i<=30 ; $i++){
+                        array_push($list3, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
+                        } 
+                        for ($i=30 ; $i<=34 ; $i++){
+                            array_push($list4, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
+                            }    
                 //  for ($i=11 ; $i<=20 ; $i++){
                 //     array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
                 //     }
@@ -99,7 +107,9 @@ class DashboardController extends Controller
             // return   $customers = $this->salla->request('GET', 'https://api.salla.dev/admin/v2 /customers');
             return response()->json([
                 'list1' => $list,
-                'list2'=>$list2
+                'list2'=>$list2 , 
+                'list3' => $list3,
+                'list4'=>$list4 , 
               
             ]);
                  
