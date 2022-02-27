@@ -68,9 +68,12 @@ class DashboardController extends Controller
                  while($flag){
                     $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page='.$countr);
                     array_push($data,$order['data']);
-                    if(is_null($order['pagination']['links']['next'])){
-                     $flag = false;
-                    }  
+                    // if(is_null($order['pagination']['links']['next'])){
+                    //  $flag = false;
+                    // }  
+                    if (!array_key_exists('next',$order['pagination']['links'])) {
+                        $flag = false;
+                    }
                     $countr = $countr+1;
                  }
               
