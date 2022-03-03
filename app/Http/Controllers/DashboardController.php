@@ -77,7 +77,7 @@ class DashboardController extends Controller
                     // if(is_null($order['pagination']['links']['next'])){
                     //  $flag = false;
                     // }  
-                    if (!array_key_exists('next',$order['pagination']['links'])  ) {
+                    if (!array_key_exists('next',$order['pagination']['links']) || $countr==10 ) {
                         $flag = false;
                     }
                     $countr = $countr+1;
