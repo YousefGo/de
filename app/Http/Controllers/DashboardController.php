@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\SallaAuthService;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
@@ -15,6 +16,7 @@ class DashboardController extends Controller
      * @var SallaAuthService
      */
     private $salla;
+    private $data = array();
 
     /**
      * Create a new controller instance.
@@ -56,60 +58,163 @@ class DashboardController extends Controller
             // let's get the store details to show it
             $store = $this->salla->getStoreDetail();
 
-            // let's get the product of store via salla service
-                // $products = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/products')['data'];
-                 // 
-                $test =serialize($store);
-                 $myfile = fopen(URL::asset("text.txt"), "r") or die("Unable to open file!");
-                 fwrite($myfile,$test );
-                 echo fread($myfile,filesize("text.txt"));
+                  
+        return view('dashboard', [
+            // get the first 8 products from the response
+            'products' => array_slice($products, 0, min(8, count($products))),
+            'store'    => $store 
+        ]);
 
-                 fclose($myfile);
               
+      
+                // $row = array();
+                // $flag = true; 
+                // $countr = 1 ;
+                //  while($flag){
+                //     $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2
+                //     /customers?page='.$countr);
+                //     array_push($this->data,$order['data']);
+                   
+                //     if (!array_key_exists('next',$order['pagination']['links'])  ) {
+                //         $flag = false;
+                //     }
+                //     $countr = $countr+1;
+                //  }//
+            
+                // dd($this->data);
+
+
+            //         while($flag){
+            //         $customers = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/customers?page='.$countr);
+            //         array_push($this->data,$customers['data']);
+                   
+            //         if (!array_key_exists('next',$customers['pagination']['links'])  ) {
+            //             $flag = false;
+            //         }
+            //         $countr = $countr+1;
+            //         sleep(1);
+                   
+            //        }//
+            // // return response()->json([
+            // //     'date'=>$this->data
+            // // ]);
                 
-               
-                $data = array();
-                $flag = true; 
-                $countr = 1 ;
-                 while($flag){
-                    $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page='.$countr);
-                    array_push($data,$order['data']);
-                    // if(is_null($order['pagination']['links']['next'])){
-                    //  $flag = false;
-                    // }  
-                    if (!array_key_exists('next',$order['pagination']['links']) || $countr==10 ) {
-                        $flag = false;
-                    }
-                    $countr = $countr+1;
-                 }
-              
+            //               $fileName = 'customers.csv';
 
-                //  for ($i=11 ; $i<=20 ; $i++){
-                //     array_push($list2, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']['id']);
-                //     }
-                    // for ($i=21 ; $i<=30 ; $i++){
-                    //     array_push($list3, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
-                    //     } 
-                    //     for ($i=30 ; $i<=34 ; $i++){
-                    //         array_push($list4, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
-                    //         }    
-                //  for ($i=11 ; $i<=20 ; $i++){
-                //     array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
-                //     }
-                //     for ($i=21 ; $i<=$number*3 ; $i++){
-                //         array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
-                //         }  
-                    
 
-                //             for ($i=31 ; $i<=$part ; $i++){
-                //                 array_push($list, $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page= '.$i)['data']);
-                //                 } 
+            //       $headers = array(
+            //           "Content-type"        => "text/csv",
+            //           "Content-Disposition" => "attachment; filename=$fileName",
+            //           "Pragma"              => "no-cache",
+            //           "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            //           "Expires"             => "0"
+            //       );
+            //       $columns = array('id', 'first_name', 'last_name', 'mobile', 'mobile_code','email','gender'
+            //       ,'city','country','location','updated_at');
+                
         
+            //     $callback = function() use( $columns) {
+            //         $file = fopen('customers2.csv', 'w');
+            //         fputcsv($file, $columns);
+                     
+            //         for($i=0 ; $i<count($this->data);$i++){
+            //             for($j=0 ; $j<count($this->data[$i]) ;$j++){
+                         
+            //                 $row['id'] =   $this->data[$i][$j]['id'];
+            //                 $row['first_name'] =    $this->data[$i][$j]['first_name'];
+            //                 $row['last_name'] =    $this->data[$i][$j]['last_name'];
+
+                            
+            //                 $row['mobile'] =    $this->data[$i][$j]['mobile'];
+
+            //                 $row['mobile_code'] =    $this->data[$i][$j]['mobile_code'];
+            //                 $row['email'] =    $this->data[$i][$j]['email'];
+            //                 $row['gender'] =    $this->data[$i][$j]['gender'];
+
+            //                 // $row['birthday'] =    $this->data[$i][$j]['birthday']; 
+            //                 $row['city'] =    $this->data[$i][$j]['city'];
+            //                 $row['country'] =    $this->data[$i][$j]['country'];
+
+            //                 $row['location'] =    $this->data[$i][$j]['location'];
+            //                 $row['updated_at'] =    $this->data[$i][$j]['updated_at']['date'];
+
+
+            //                 fputcsv($file, array($row['id'], $row['first_name'], $row['last_name'],
+            //                 $row['mobile'], $row['mobile_code'],$row['email'],$row['gender'],
+            //                 //  $row['birthday'],
+            //                  $row['city'],
+            //                  $row['country'],
+            //                  $row['location'],
+            //                  $row['updated_at'],
+            //                 ));
+            //             }
+                        
+            //         }
+            //         fclose($file);
+            //     };
+                 
+            //     return   response()->stream($callback, 200, $headers);
+
+      
+        
+                        // $columns = array('id', 'first_name', 'last_name', 'mobile', 'mobile_code','email','gender'      ,'birthday','city','country');
+
+
+
+  //       $fileName = 'orders.csv';
+
+
+            //       $headers = array(
+            //           "Content-type"        => "text/csv",
+            //           "Content-Disposition" => "attachment; filename=$fileName",
+            //           "Pragma"              => "no-cache",
+            //           "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            //           "Expires"             => "0"
+            //       );
+            //       $columns = array('id', 'reference_id', 'amount', 'currency', 'date','status','can_cancel');
+                
+        
+            //     $callback = function() use( $columns) {
+            //         $file = fopen('tasks.csv', 'w');
+            //         fputcsv($file, $columns);
+                     
+            //         for($i=0 ; $i<count($this->data);$i++){
+            //             for($j=0 ; $j<count($this->data[$i]) ;$j++){
+                         
+            //                 $row['id'] =   $this->data[$i][$j]['id'];
+            //                 $row['reference_id'] =    $this->data[$i][$j]['reference_id'];
+            //                 $row['amount'] =    $this->data[$i][$j]['total']['amount'];
+            //                 $row['currency'] =    $this->data[$i][$j]['total']['currency'];
+            //                 $row['date'] =    $this->data[$i][$j]['date']['date'];
+            //                 $row['status'] =    $this->data[$i][$j]['status']['name'];
+            //                 $row['can_cancel'] =    $this->data[$i][$j]['can_cancel']; 
+
+            //                 // $row['id'] =   'id';
+            //                 // $row['reference_id'] =    'reference_id';
+            //                 // $row['amount'] =   'amount';
+            //                 // $row['currency'] =    'sr';
+            //                 // $row['date'] =    'date';
+            //                 // $row['status'] =   'stauts';
+            //                 // $row['can_cancel'] =    'can_cancel'; 
+            //                 fputcsv($file, array($row['id'], $row['reference_id'], $row['amount'],
+            //                 $row['currency'], $row['date'],$row['status'],$row['can_cancel']));
+            //             }
+                        
+            //         }
+                                
+        
+            //         fclose($file);
+
+            //     };
+            //   return   response()->stream($callback, 200, $headers);
+
+               
+             
+
 
 
                             
-                // return response()->json(['orders'=>$list]
-                // );
+             
              
             //    $data = $this->salla->request('GET', 'https://accounts.salla.sa/oauth2/user/info')['data'];
             //   $categroes = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/categoriess')['data'];
@@ -122,8 +227,7 @@ class DashboardController extends Controller
 
 
 
-              
-
+      
             /**
              * Or you can use Http client of laravel to get the products
              */
@@ -134,11 +238,6 @@ class DashboardController extends Controller
             //    $products = $response->json()['data'];
             //}
         }
-
-        return view('dashboard', [
-            // get the first 8 products from the response
-            'products' => array_slice($products, 0, min(8, count($products))),
-            'store'    => $store
-        ]);
     }
-}
+    }
+

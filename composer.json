@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "laravel/ui": "~v3.3.0",
+        "maatwebsite/excel": "^3.1",
         "salla/ouath2-merchant": "^1.0",
         "tightenco/ziggy": "^1.0"
     },

@@ -53,10 +53,11 @@
                         </div>
                     </div>
                 </div>
+                
                 <!-- Right Side -->
                 <div class="w-full md:w-9/12 mx-2 h-64">
                     <div class="overflow-x-auto card">
-                        <table class="table w-full table-borderless">
+                        {{-- <table class="table w-full table-borderless">
                             <thead>
                             <tr>
                                 <th>Product</th>
@@ -98,7 +99,8 @@
                                 </tr>
                             @endforeach
                             </tbody>
-                        </table>
+                        </table> --}}
+                    
                     </div>
                 </div>
             </div>

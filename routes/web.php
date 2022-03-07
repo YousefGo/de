@@ -4,8 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OAuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-
+use App\Http\Controllers\dateImportCsvController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,4 +31,5 @@ Route::get('test',function(){
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/oauth/redirect', [OAuthController::class, 'redirect'])->name('oauth.redirect');
     Route::get('/oauth/callback', [OAuthController::class, 'callback'])->name('oauth.callback');
+    Route::get('export', [dateImportCsvController::class, 'importOrder']);
 });
