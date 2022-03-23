@@ -60,34 +60,101 @@ class DashboardController extends Controller
 
            
             
+                   $file = fopen("ids.csv","r");
+                         $t = array();
+                         while(! feof($file))
+                         {
+                         array_push($t,fgetcsv($file)) ;
+                         }
+
+                         fclose($file);
+                        //   $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders/'.$t[0][0]);
+                         $len =  count($t)-1;
+                        //   print_r($t[23029][0]);
+                        // // // loop through the array
+                         for ($i=0 ; $i<$len ; $i++){
+                        // // echo ($i+1).".". $t[$i][0]."<br>";
+                        $key = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', strval($t[$i][0]));
+
+                      $data =    $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders/'.$key );
+                     
+                          array_push($this->data,$data['data']);
+                         }
+
+                        
+                               $fileName = 'orderDeatilsInfo10.csv';
+
+
+                  $headers = array(
+                      "Content-type"        => "text/csv",
+                      "Content-Disposition" => "attachment; filename=$fileName",
+                      "Pragma"              => "no-cache",
+                      "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                      "Expires"             => "0"
+                  );
+                  $columns = array('id', 'reference_id', 'status', 'payment_method','sub_total_amount','shipping_cost_amount'
+                  ,'cash_on_delivery_amount','tax_percent','tax_amount_amount');
+                
         
-            $num = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page=251');
-             dd( $num['data']);
+                $callback = function() use( $columns) {
+                    $file = fopen('orderDeatilsInfoTest10Sample.csv', 'w');
+                    fputcsv($file, $columns);
+                     
+                         for( $i=0 ; $i<count($this->data);$i++){
+
+                            $row['id'] =   $this->data[0]['id'];
+                            $row['reference_id'] =   $this->data[0]['reference_id'];
+                            $row['status'] =   $this->data[0]['status']['name'];
+
+                            $row['payment_method'] =   $this->data[0]['payment_method'];
+                            $row['sub_total_amount'] =   $this->data[0]['amounts']['sub_total']['amount'];
+                            $row['shipping_cost_amount'] =    $this->data[0]['amounts']['shipping_cost']['amount'];
+
+                            $row['cash_on_delivery_amount'] =   $this->data[0]['amounts']['cash_on_delivery']['amount'];
+                            $row['tax_percent'] =   $this->data[0]['amounts']['tax']['percent']; //tax_percent
+                            $row['tax_amount'] =   $this->data[0]['amounts']['tax']['amount']['amount'];
+                           
+
+
+                            fputcsv($file, array($row['id'], $row['reference_id'], $row['status'],
+                            $row['payment_method'], $row['sub_total_amount'], $row['shipping_cost_amount'],
+                            $row['cash_on_delivery_amount'], $row['tax_percent'], $row['tax_amount_amount'],));
+                         }
+                    
+                          
+
+                           
+                         
+                     
+                    fclose($file);
+                };
+
+        //      dd( $num);
             //  return  $var = $num['data'][0]['items'][0]['name'].'&&'.$num['data'][0]['items'][1]['name'];
             //   return response()->json(['number'=>$num['data'][0]['items'][0]['name']]);
 
-            // $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/customers');
-                $data = array();
-                $row = array();
-                $flag = true; 
-                $countr = 1200 ;
-                 while($flag){
+    //   return       $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/customers');
+                // $data = array();
+                // $row = array();
+                // $flag = true; 
+                // $countr = 501 ;
+                //  while($flag){
 
-                   $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page='.$countr);
-                    if($order === "empty"){
-                        $countr = $countr+1;
-                     continue ;
-                    }
-                    array_push($this->data,$order['data']);
+                //    $order = $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders?page='.$countr);
+                //     if($order === "empty"){
+                //         $countr = $countr+1;
+                //      continue ;
+                //     }
+                //     array_push($this->data,$order['data']);
                    
-                    if (!array_key_exists('next',$order['pagination']['links'])  ) {
-                        $flag = false;
-                    }
+                //     if (!array_key_exists('next',$order['pagination']['links']) || $countr ==1000  ) {
+                //         $flag = false;
+                //     }
                   
-                    $countr = $countr+1;
-                    sleep(1);
+                //     $countr = $countr+1;
+                //     sleep(1);
                  
-                 }//
+                //  }//
             
                 
 
@@ -167,50 +234,76 @@ class DashboardController extends Controller
                         // $columns = array('id', 'first_name', 'last_name', 'mobile', 'mobile_code','email','gender'      ,'birthday','city','country');
 
 
+                    //      $file = fopen("ids.csv","r");
+                    //      $t = array();
+                    //      while(! feof($file))
+                    //      {
+                    //      array_push($t,fgetcsv($file)) ;
+                    //      }
 
-        $fileName = 'ordersTest.csv';
+                    //      fclose($file);
+                    //     //   $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders/'.$t[0][0]);
+                    //      $len =  count($t)-1;
+                    //     //   print_r($t[23029][0]);
+                    //     // // // loop through the array
+                    //      for ($i=0 ; $i<$len ; $i++){
+                    //     // // echo ($i+1).".". $t[$i][0]."<br>";
+                    //     $key = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', strval($t[$i][0]));
+
+                    //   $data =    $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders/'.$key );
+                     
+                    //       array_push($this->data,$data['data']);
+                    //      }
+                    // //    return  $this->salla->request('GET', 'https://api.salla.dev/admin/v2/orders/1093113851');
+                    //    //1093113851
+  
+                    //   return response(["data"=>$this->data]);
 
 
-                  $headers = array(
-                      "Content-type"        => "text/csv",
-                      "Content-Disposition" => "attachment; filename=$fileName",
-                      "Pragma"              => "no-cache",
-                      "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-                      "Expires"             => "0"
-                  );
-                  $columns = array('id', 'reference_id','items','amount', 'currency', 'date','status','can_cancel');
+
+        // $fileName = 'ordersTest.csv';
+
+
+        //           $headers = array(
+        //               "Content-type"        => "text/csv",
+        //               "Content-Disposition" => "attachment; filename=$fileName",
+        //               "Pragma"              => "no-cache",
+        //               "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        //               "Expires"             => "0"
+        //           );
+        //           $columns = array('id', 'reference_id','items','amount', 'currency', 'date','status','can_cancel');
                 
         
-                $callback = function() use( $columns) {
-                    $file = fopen('Allorders3.csv', 'w');
-                    fputcsv($file, $columns);
+        //         $callback = function() use( $columns) {
+        //             $file = fopen('orders1.csv', 'w');
+        //             fputcsv($file, $columns);
                      
-                    for($i=0 ; $i<count($this->data);$i++){
-                        for($j=0 ; $j<count($this->data[$i]) ;$j++){
-                            $row['items'] = ' ';
-                            $row['id'] =   $this->data[$i][$j]['id'];
-                            $row['reference_id'] =    $this->data[$i][$j]['reference_id'];
-                            for($k=0 ; $k<count($this->data[$i][$j]['items']);$k++){
-                                $row['items'] = $row['items'] .($k+1).'No'. $this->data[$i][$j]['items'][$k]['name']
-                                ."Qyt".$this->data[$i][$j]['items'][$k]['quantity'].".";
-                            }
+        //             for($i=0 ; $i<count($this->data);$i++){
+        //                 for($j=0 ; $j<count($this->data[$i]) ;$j++){
+        //                     $row['items'] = ' ';
+        //                     $row['id'] =   $this->data[$i][$j]['id'];
+        //                     $row['reference_id'] =    $this->data[$i][$j]['reference_id'];
+        //                     for($k=0 ; $k<count($this->data[$i][$j]['items']);$k++){
+        //                         $row['items'] = $row['items'] .($k+1).'No'. $this->data[$i][$j]['items'][$k]['name']
+        //                         ."Qyt".$this->data[$i][$j]['items'][$k]['quantity'].".";
+        //                     }
                            
-                            $row['amount'] =    $this->data[$i][$j]['total']['amount'];
-                            $row['currency'] =    $this->data[$i][$j]['total']['currency'];
-                            $row['date'] =    $this->data[$i][$j]['date']['date'];
-                            $row['status'] =    $this->data[$i][$j]['status']['name'];
-                            $row['can_cancel'] =    $this->data[$i][$j]['can_cancel']; 
+        //                     $row['amount'] =    $this->data[$i][$j]['total']['amount'];
+        //                     $row['currency'] =    $this->data[$i][$j]['total']['currency'];
+        //                     $row['date'] =    $this->data[$i][$j]['date']['date'];
+        //                     $row['status'] =    $this->data[$i][$j]['status']['name'];
+        //                     $row['can_cancel'] =    $this->data[$i][$j]['can_cancel']; 
 
-                            fputcsv($file, array($row['id'], $row['reference_id'], $row['items'], $row['amount'],
-                            $row['currency'], $row['date'],$row['status'],$row['can_cancel']));
-                        }
+        //                     fputcsv($file, array($row['id'], $row['reference_id'], $row['items'], $row['amount'],
+        //                     $row['currency'], $row['date'],$row['status'],$row['can_cancel']));
+        //                 }
                         
-                    }
+        //             }
                                 
         
-                    fclose($file);
+        //             fclose($file);
 
-                };
+        //         };
             //   return   response()->stream($callback, 200, $headers);
             return   response()->stream($callback, 200, $headers);
 
@@ -249,6 +342,9 @@ class DashboardController extends Controller
             'products' => array_slice($products, 0, min(8, count($products))),
             'store'    => $store 
         ]);
+    }
+    public function GenerateOrderDetail(){
+        
     }
     }
 
